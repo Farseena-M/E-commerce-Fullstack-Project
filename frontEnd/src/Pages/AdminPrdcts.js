@@ -1,24 +1,16 @@
 import React, { useContext, useEffect } from 'react'
 import { Button,  Table } from 'react-bootstrap'
-import { userContext } from '../App'
+import { AXIOS,userContext } from '../App'
 import Sidebar from '../Components/SideBar'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const AdminPrdcts = () => {
   const Nvgt=useNavigate()
     const {product,setProduct}=useContext(userContext)
-   /*  const removeItem=(id)=>{
-      const rmvData=product.filter((item)=>item._id !== id)
-      setProduct(rmvData)
-     } */
-
-     
-
      const admnFetchProducts = async () =>{
        try{
-         const rspns = await axios.get('http://localhost:9000/api/admin/products')
+         const rspns = await AXIOS.get('http://localhost:9000/api/admin/products')
          console.log(rspns.data.data.products);
          setProduct(rspns.data.data.products)
         }catch(err){
@@ -32,7 +24,7 @@ const AdminPrdcts = () => {
      const removeItem = async(id) =>{
       try{
        const productId = id
-       const rspns = await axios.delete(`http://localhost:9000/api/admin/products`,{data:{productId:productId}})
+       const rspns = await AXIOS.delete(`http://localhost:9000/api/admin/products`,{data:{productId:productId}})
        console.log(rspns);
        admnFetchProducts()
         }catch(err){

@@ -57,6 +57,7 @@ const ViewProduct = () => {
                                     <Card.Img variant="top" src={item.image} style={{ height: "250px", width: '250px' }} />
                                     <Card.Body>
                                         <Card.Title style={{ fontFamily: 'serif', textAlign: 'center' }}>{item.title}</Card.Title>
+                                        {/* <Card.Title style={{ fontFamily: 'serif', textAlign: 'center' }}>{item.description}</Card.Title> */}
                                         <Card.Title style={{ fontFamily: 'serif', textAlign: 'center' }}>{item.price}</Card.Title>
                                         {/* {cart.find((crtItm) => crtItm.id === item.id) ? */}
                                             {/* <Button onClick={() => Nvgt(`/cart/${userId}`)} style={{ backgroundColor: 'black', border: 'none' }}>Go to cart</Button>  */}

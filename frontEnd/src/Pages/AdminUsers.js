@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from 'react'
-import { userContext } from '../App'
+import { AXIOS, userContext } from '../App'
 import { Table } from 'react-bootstrap'
 import Sidebar from '../Components/SideBar'
 import { toast } from 'react-toastify'
-import axios from 'axios'
 
 const AdminUsers = () => {
     const {user,setUser}=useContext(userContext)
@@ -11,7 +10,7 @@ const AdminUsers = () => {
     useEffect(()=>{
       const admnFetchUsers = async() =>{
        try{
-        const rspns = await axios.get('http://localhost:9000/api/admin/users')
+        const rspns = await AXIOS.get('http://localhost:9000/api/admin/users')
         console.log(rspns.data.data.user);
         setUser(rspns.data.data.user)
        }catch(err){

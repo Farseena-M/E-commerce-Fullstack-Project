@@ -31,6 +31,15 @@ export const Axios = axios.create({
   }
 })
 
+export const AXIOS = axios.create({
+  baseUrl:process.env.REACT_APP_LOCALHOST,
+  headers:{
+    "Content-Type":"Application/json",
+    Authorization:localStorage.getItem('adminToken')
+  }
+})
+
+
 function App() {
   const [user,setUser]=useState([])
   const [login,setLogin]=useState(false)
