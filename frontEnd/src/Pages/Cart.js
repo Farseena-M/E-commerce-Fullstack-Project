@@ -1,15 +1,28 @@
- import React, { useState } from 'react'
+ import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
-import { userContext } from '../App'
+import { Axios } from '../App'
 import { Button, Card, Container } from 'react-bootstrap'
 import Navigation from '../Components/Navigation'
+import { toast } from 'react-toastify'
 const Cart = () => {
 
+  const [cart,setCart] =useState([])
+  const userId = localStorage.getItem('userId')
 
-  const [products,setProducts] =useState([])
-
+  useEffect(()=>{
+   const cartProducts = async() =>{
+    try{
+       const rspns = await Axios.get(`http://localhost:9000/api/users/cart/${userId}`)
+       console.log(rspns.data.data);
+       setCart(rspns.data.data)
+       
+    }catch(err){
+      toast.error(err)
+    }
+   }
+   cartProducts()
+  },[])
   
-
 
 /*   const {cart,setCart,buy,setBuy} =useContext(userContext)
   const incrmnt=(id)=>{
@@ -41,6 +54,7 @@ const Cart = () => {
         setBuy([...buy,buyProduct])
         setCart(remove)
      } */
+     console.log(cart);
   return (
     <div style={{backgroundColor:'lightgrey'}}>
       <Navigation/>
@@ -48,14 +62,14 @@ const Cart = () => {
     <h1 style={{textAlign:'center',fontFamily:'serif'}}><u>Cart</u></h1>
     <div  className='m-4 p-5 mt-4 d-flex align-items-center justify-content-center flex-wrap'>
        {
-       products.map((item)=>(
-          <div key={item.id}>
+       cart.map((item)=>(
+          <div key={item._id}>
       <Card className="shadow p-5 m-1 bg-body-tertiary rounded" style={{ width: '23rem', height: '30rem', alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-      <Card.Img variant="top" src={item.productImage}style={{height:"200px",width:'250px'}}/>
+      <Card.Img variant="top" src={item.image} style={{height:"200px",width:'250px'}}/>
       <Card.Body>
-        <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>{item.productName}</Card.Title>
-        <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>Price:{item.Price}</Card.Title>
-        <div><h6 style={{alignItems:'center',position:'relative',left:'70px'}}>qty:{item.qty}<br/>
+        <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>{item.title}</Card.Title>
+        <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>Price:{item.price}</Card.Title>
+        <div><h6 style={{alignItems:'center',position:'relative',left:'70px'}}>qty:{item.quantity}<br/>
           <Button className='m-1' style={{backgroundColor:'black',border:'none',position:'relative',right:'15px'}}>-</Button>
           <Button  className='m-1' style={{backgroundColor:'black',border:'none',position:'relative',right:'15px'}}>+</Button></h6>
           <h6 style={{textAlign:'center'}}>Total</h6>

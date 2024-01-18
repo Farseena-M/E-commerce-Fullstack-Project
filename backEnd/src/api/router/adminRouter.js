@@ -7,7 +7,7 @@ const adminRouter = express.Router()
 
 adminRouter.post('/login',(adminController.adminLogin))
 
-// .use(vrfyToken)
+.use(vrfyToken)
 
 .get('/users',(adminController.getAllUsers))
 .get('/users/:id',(adminController.getUsersById))
@@ -16,6 +16,11 @@ adminRouter.post('/login',(adminController.adminLogin))
 .put('/products/:id',(adminController.updateProduct))
 .post('/create',uploadCloudinary,(adminController.createProduct))
 .delete('/products',(adminController.deleteProduct))
+.post('/createcategory',(adminController.createCategory))
+.get('/categories',(adminController.getAllCategory))
+.put('/updatecategory/:id',(adminController.updateCatgory))
+.delete('/deletecategory/:id',(adminController.deleteCategory))
+
 
 
 module.exports = adminRouter

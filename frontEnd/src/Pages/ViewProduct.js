@@ -9,7 +9,6 @@ import axios from 'axios'
 
 const ViewProduct = () => {
     const Nvgt = useNavigate()
-    const { cart } = useContext(userContext)
     const { id } = useParams();
     const [product, setProduct] = useState([])
     const userId = localStorage.getItem('userId')

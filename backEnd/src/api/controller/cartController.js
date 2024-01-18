@@ -41,12 +41,20 @@ const getCartProduct = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id
     const getCart = await Cart.findOne({User:userId})
     console.log(getCart);
+    if(getCart.length===0){
+        return  res.status(200).json({
+            status:'Success',
+           message:`successfully fetched products cart is empty`
+        })
+    }
+    const cartItems=getCart.Product
+    const cartProducts = await products.find({_id:{$in:cartItems}})
     res.status(200).json({
-        status:'Success',
-        data:{
-            getCart
-        }
+        status:'success',
+        message:'successfully fetched products',
+        data:cartProducts
     })
+     
 })
 
 

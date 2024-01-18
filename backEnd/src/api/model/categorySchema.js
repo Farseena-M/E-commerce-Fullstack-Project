@@ -4,10 +4,6 @@ const categorySchema = new mongoose.Schema({
         type: String,
         unique:true,
         required:true
-    },
-    slug:{
-        type:String,
-        lowercase:true
     }
 })
 

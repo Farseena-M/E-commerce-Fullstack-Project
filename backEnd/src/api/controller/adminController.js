@@ -2,6 +2,7 @@ const user = require('../model/userSchema')
 const asyncErrorHandler = require('../utils/asyncErrorHandler')
 const products = require('../model/productSchema')
 const jwt = require('jsonwebtoken')
+const Category = require('../model/categorySchema')
 
 const adminLogin = asyncErrorHandler(async(req,res)=>{
     const {username,password} = req.body;
@@ -127,6 +128,55 @@ const deleteProduct = asyncErrorHandler(async(req,res)=>{
     })
 })
 
+
+const createCategory = asyncErrorHandler(async(req,res)=>{
+    console.log(req.body)
+    const {name} = req.body;
+    const newCategory = await Category.create({name})
+    res.status(201).json({
+        status : 'Success',
+        data : {
+            Category:newCategory
+        }
+    })
+})
+
+
+
+const getAllCategory = asyncErrorHandler(async(req,res)=>{
+    const allCategory = await Category.find({})
+    res.status(201).json({
+        status : 'Success',
+        data : {
+            Category:allCategory
+        }
+    })
+})
+
+
+
+const updateCatgory = asyncErrorHandler(async(req,res)=>{
+     const updatedCategory = await Category.findByIdAndUpdate(req.params.id,req.body,{new:true})
+     res.status(200).json({
+        status:'Success',
+        data:{
+            products:updatedCategory
+        }
+    })
+})
+
+
+
+const deleteCategory = asyncErrorHandler(async(req,res)=>{
+    const categoryId = req.params.id
+    await Category.findByIdAndDelete(categoryId)
+    res.status(200).json({
+        status:'Deleted'
+    })
+})
+
+
+
 module.exports = {
     getAllUsers,
     getUsersById,
@@ -135,5 +185,9 @@ module.exports = {
     updateProduct,
     deleteProduct,
     adminLogin,
-    getAllProducts
+    getAllProducts,
+    createCategory,
+    updateCatgory,
+    deleteCategory,
+    getAllCategory
 }

@@ -20,6 +20,7 @@ import Add from "./Components/Add";
 import BuyProduct from "./Components/BuyProduct";
 import SignUp from "./Pages/SignUp";
 import axios from 'axios'
+import AddCategory from "./Components/addCategory";
 
 export const userContext = createContext()
 
@@ -67,6 +68,7 @@ return (
       <Route path="/buy" element={<BuyProduct/>}></Route>
       <Route path="/clctns" element={<Collections/>}></Route>
       <Route path="/view/:id" element={<ViewProduct/>}></Route>
+      <Route path="/addcategory" element={<AddCategory/>}></Route>
     </Routes>
     </userContext.Provider>
     <ToastContainer/>
