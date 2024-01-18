@@ -34,12 +34,11 @@ const ViewProduct = () => {
 
     const handleCart = async () => {
       try{
-        const response = await Axios.post(`http://localhost:9000/api/users/cart/${userId}`,{productId:id})
+        const response = await Axios.post(`http://localhost:9000/api/users/cart/${userId}`,{product:id})
         console.log(response);
         if (response.status === 200){
             await Axios.get(`http://localhost:9000/api/users/cart/${userId}`)
             toast.success("Product added to the cart!")
-            Nvgt(`/cart/${userId}`)
           }
       }catch(err){
         toast.error(err)

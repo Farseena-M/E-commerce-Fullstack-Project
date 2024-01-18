@@ -8,6 +8,9 @@ const Cart = () => {
 
   const [products,setProducts] =useState([])
 
+  
+
+
 /*   const {cart,setCart,buy,setBuy} =useContext(userContext)
   const incrmnt=(id)=>{
  const newqty=cart.map((item)=>
