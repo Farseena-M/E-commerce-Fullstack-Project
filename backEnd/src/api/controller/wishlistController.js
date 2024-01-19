@@ -41,11 +41,18 @@ const getWishlistProduct = asyncErrorHandler(async(req,res)=>{
     const userId = req.params.id;
     const getWishlist = await WishList.findOne({User:userId})
     console.log(getWishlist);
+    if(!getWishlist){
+        return  res.status(200).json({
+            status:'Success',
+           message:`Wishlist is empty`
+        })
+    }
+    const wishlistItems=getWishlist.Product
+    const wishlistProducts = await products.find({_id:{$in:wishlistItems}})
     res.status(200).json({
-        status:'Success',
-        data :{
-            getWishlist
-        }
+        status:'success',
+        message:'successfully fetched products',
+        data:wishlistProducts
     })
 })
 

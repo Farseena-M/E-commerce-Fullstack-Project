@@ -3,7 +3,6 @@ import Login from "./Pages/Login"
 import Home from "./Pages/Home";
 import Cart from "./Pages/Cart";
 import { createContext, useState } from "react";
-import Collections from "./Pages/Collections";
 import { PRODUCTS } from "./Components/Products";
 import Cloths from "./Pages/Cloths";
 import Prdcts from "./Pages/Prdcts";
@@ -22,6 +21,8 @@ import SignUp from "./Pages/SignUp";
 import axios from 'axios'
 import AddCategory from "./Components/addCategory";
 import CategoryForm from "./Components/categoryForm";
+import Wishlist from "./Pages/wishList";
+import All from "./Pages/All";
 
 export const userContext = createContext()
 
@@ -66,8 +67,9 @@ return (
       <Route path="/adminprdcts" element={<AdminPrdcts/>}></Route>
       <Route path="/add" element={<Add/>}></Route>
       <Route path="/buy" element={<BuyProduct/>}></Route>
-      <Route path="/all" element={<Collections/>}></Route>
+      <Route path="/all" element={<All/>}></Route>
       <Route path="/view/:id" element={<ViewProduct/>}></Route>
+      <Route path="/wishlist" element={<Wishlist/>}></Route>
       {/* <Route path="/addcategory" element={<AddCategory/>}></Route> */}
       {/* <Route path="/categoryform" element={<CategoryForm/>}></Route> */}
     </Routes>

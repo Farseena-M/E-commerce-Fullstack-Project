@@ -9,6 +9,7 @@ import {RiAdminFill} from 'react-icons/ri'
 import logo from '../Components/Assets/Babyshh.png'
 import { Dropdown } from 'react-bootstrap';
 import {TbLogout} from 'react-icons/tb'
+import { FaHeart } from "react-icons/fa";
 import { userContext } from '../App';
 import { toast } from 'react-toastify';
 import Login from '../Pages/Login';
@@ -53,6 +54,14 @@ import Login from '../Pages/Login';
         <Nav style={{gap:'0.6rem',alignItems:'center'}}>
           
           <Nav.Link onClick={()=>{Nvgtn('/cart')}} style={{fontSize:'27px'}} title='Cart'><BsFillCartFill /></Nav.Link> 
+          <Nav.Link
+              onClick={() => Nvgtn("/wishlist")}
+              style={{ fontSize: "25px" }}
+              title="wishlist"
+            >
+               
+               <FaHeart />
+            </Nav.Link>
           {localStorage.getItem('userToken')?
           <Nav.Link onClick={logout} style={{fontSize:'27px'}} title='Logout'><TbLogout /></Nav.Link>:
           <Nav.Link onClick={()=>{Nvgtn('/login')}} style={{fontSize:'27px'}} title='Login'><CgLogOut /></Nav.Link>}
