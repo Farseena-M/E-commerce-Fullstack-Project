@@ -25,18 +25,17 @@ import CategoryForm from "./Components/categoryForm";
 
 export const userContext = createContext()
 
-export const Axios = axios.create({
-  baseUrl:process.env.REACT_APP_LOCALHOST,
+export const Axios=axios.create({
+  baseURL:process.env.REACT_APP_BASE_URL|| "http://localhost:9000/",
   headers:{
-    "Content-Type":"Application/json",
-    Authorization:localStorage.getItem('userToken')
+    Authorization:localStorage.getItem("userToken")
   }
-})
+
+ })
 
 export const AXIOS = axios.create({
-  baseUrl:process.env.REACT_APP_LOCALHOST,
+  baseUrl:process.env.REACT_APP_BASE_URL|| "http://localhost:9000/",
   headers:{
-    "Content-Type":"Application/json",
     Authorization:localStorage.getItem('adminToken')
   }
 })
@@ -67,10 +66,10 @@ return (
       <Route path="/adminprdcts" element={<AdminPrdcts/>}></Route>
       <Route path="/add" element={<Add/>}></Route>
       <Route path="/buy" element={<BuyProduct/>}></Route>
-      <Route path="/clctns" element={<Collections/>}></Route>
+      <Route path="/all" element={<Collections/>}></Route>
       <Route path="/view/:id" element={<ViewProduct/>}></Route>
-      <Route path="/addcategory" element={<AddCategory/>}></Route>
-      <Route path="/categoryform" element={<CategoryForm/>}></Route>
+      {/* <Route path="/addcategory" element={<AddCategory/>}></Route> */}
+      {/* <Route path="/categoryform" element={<CategoryForm/>}></Route> */}
     </Routes>
     </userContext.Provider>
     <ToastContainer/>

@@ -32,10 +32,10 @@ import Login from '../Pages/Login';
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-          <Nav.Link style={{fontFamily:'serif'}}onClick={()=>Nvgtn('/clctns')}><h2>Collections</h2></Nav.Link>
+          <Nav.Link style={{fontFamily:'serif'}}onClick={()=>Nvgtn('/all')}><h2>All</h2></Nav.Link>
           <Dropdown>
       <Dropdown.Toggle variant="" id="dropdown-basic"  style={{fontFamily:'serif',fontSize:'30px',fontWeight:'1px'}}>
-        Sections
+        Collections
         </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={()=>{Nvgtn('/cloths')}}><h6 style={{fontFamily:'serif',fontSize:'20px',fontWeight:'1px'}}>Baby Cloths</h6></Dropdown.Item>
@@ -53,7 +53,7 @@ import Login from '../Pages/Login';
         <Nav style={{gap:'0.6rem',alignItems:'center'}}>
           
           <Nav.Link onClick={()=>{Nvgtn('/cart')}} style={{fontSize:'27px'}} title='Cart'><BsFillCartFill /></Nav.Link> 
-          {Login?
+          {localStorage.getItem('userToken')?
           <Nav.Link onClick={logout} style={{fontSize:'27px'}} title='Logout'><TbLogout /></Nav.Link>:
           <Nav.Link onClick={()=>{Nvgtn('/login')}} style={{fontSize:'27px'}} title='Login'><CgLogOut /></Nav.Link>}
           <Nav.Link  style={{fontSize:'27px'}} title='Admin'><RiAdminFill  onClick={()=>Nvgtn('/adminlogin')}/></Nav.Link>    

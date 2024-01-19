@@ -1,15 +1,16 @@
  import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
-import { Axios } from '../App'
+import { Axios, userContext } from '../App'
 import { Button, Card, Container } from 'react-bootstrap'
 import Navigation from '../Components/Navigation'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 const Cart = () => {
-
+  const Nvgt = useNavigate()
   const [cart,setCart] =useState([])
   const userId = localStorage.getItem('userId')
 
-  useEffect(()=>{
+  
    const cartProducts = async() =>{
     try{
        const rspns = await Axios.get(`http://localhost:9000/api/users/cart/${userId}`)
@@ -20,9 +21,36 @@ const Cart = () => {
       toast.error(err)
     }
    }
+  useEffect(()=>{
    cartProducts()
   },[])
   
+
+
+
+  const removeCartItem = async(id) =>{
+    try{
+     const productId = id
+     const rspns = await Axios.delete(`http://localhost:9000/api/users/cart/${userId}`,{data:{productId:productId}})
+     console.log(rspns);
+     cartProducts()
+      }catch(err){
+      toast.error(err)
+      }
+  }
+
+  
+  const handlePayment = async() =>{
+    try{
+    const rspns = await Axios.post(`http://localhost:9000/api/users/payment/${userId}`)
+    // console.log(rspns.data.session);
+    const Session = rspns.data.session;
+    console.log(Session);
+    window.location.href = Session     
+    }catch(err){
+      toast.error(err)  
+    }
+  }
 
 /*   const {cart,setCart,buy,setBuy} =useContext(userContext)
   const incrmnt=(id)=>{
@@ -54,7 +82,7 @@ const Cart = () => {
         setBuy([...buy,buyProduct])
         setCart(remove)
      } */
-     console.log(cart);
+
   return (
     <div style={{backgroundColor:'lightgrey'}}>
       <Navigation/>
@@ -69,19 +97,20 @@ const Cart = () => {
       <Card.Body>
         <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>{item.title}</Card.Title>
         <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>Price:{item.price}</Card.Title>
-        <div><h6 style={{alignItems:'center',position:'relative',left:'70px'}}>qty:{item.quantity}<br/>
+        <div style={{position:'relative',right:'40px'}}><h6 style={{alignItems:'center',position:'relative',left:'70px'}}>qty:{item.quantity}<br/>
           <Button className='m-1' style={{backgroundColor:'black',border:'none',position:'relative',right:'15px'}}>-</Button>
           <Button  className='m-1' style={{backgroundColor:'black',border:'none',position:'relative',right:'15px'}}>+</Button></h6>
-          <h6 style={{textAlign:'center'}}>Total</h6>
-        </div>     
-          <Button style={{backgroundColor:'black',marginLeft:'10px',border:'none'}}>Buy now</Button>
-          <Button  style={{backgroundColor:'black',marginLeft:'10px',border:'none'}}>Remove</Button>
+          </div>
+          {/* <h6 style={{textAlign:'center'}}>Total</h6>      */}
+          <Button onClick={()=>removeCartItem(item._id)} style={{backgroundColor:'black',marginLeft:'10px',border:'none'}}>Remove</Button>
       </Card.Body>
     </Card><br/>
     </div>
         ))}    
       </div>
       <h2 style={{textAlign:'center'}}>Total Price</h2>
+      <button onClick={handlePayment} style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',position:'relative',left:'600px',borderRadius:'8px',marginRight:'10px'}}>
+      Buy Now</button>
       <button style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',position:'relative',left:'600px',borderRadius:'8px'}}>
       Clear</button>
     </Container>

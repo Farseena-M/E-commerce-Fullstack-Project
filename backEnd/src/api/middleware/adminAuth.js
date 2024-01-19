@@ -8,7 +8,7 @@ const vrfyToken = async(req,res,next) =>{
             message:'No token provided'
         })
     }
-    const token = authHeader.split(' ')[1];
+    const token = authHeader;
 
     if(!token){
         res.status(404).json({message:'You are not loggedIn'})

@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 
 const CategoryForm = ({handleSubmit, value, setValue}) => {
   return (
@@ -18,4 +18,4 @@ const CategoryForm = ({handleSubmit, value, setValue}) => {
   )
 }
 
-export default CategoryForm
+export default CategoryForm */

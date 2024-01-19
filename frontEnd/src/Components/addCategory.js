@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+/* import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Sidebar from './SideBar'
 import CategoryForm from "./categoryForm";
@@ -142,4 +142,4 @@ const handleDelete = async(id)=>{
   );
 };
 
-export default AddCategory;
+export default AddCategory; */

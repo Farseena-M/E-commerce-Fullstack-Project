@@ -177,6 +177,17 @@ const deleteCategory = asyncErrorHandler(async(req,res)=>{
 
 
 
+
+const allPurchasedProducts = asyncErrorHandler(async(req,res)=>{
+  const purchasedProduct = await products.find({ isPurchased: true })
+  res.status(200).json({
+    status:'Success',
+    message:'Successfully fetched purchased products',
+    data:purchasedProduct
+  })
+})
+
+
 module.exports = {
     getAllUsers,
     getUsersById,
@@ -189,5 +200,6 @@ module.exports = {
     createCategory,
     updateCatgory,
     deleteCategory,
-    getAllCategory
+    getAllCategory,
+    allPurchasedProducts
 }

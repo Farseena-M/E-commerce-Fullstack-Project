@@ -1,10 +1,23 @@
-import React, { useContext } from 'react'
-import { userContext } from '../App'
+import React, { useContext, useEffect, useState } from 'react'
 import Sidebar from './SideBar'
 import { Table } from 'react-bootstrap'
+import { AXIOS } from '../App'
+import { toast } from 'react-toastify'
 
 const BuyProduct = () => {
-    const {buy}=useContext(userContext)
+    const [purchasedProducts,setPurchasedProducts] = useState([])
+    useEffect(()=>{
+     const fetchpurchasedProduct = async() =>{
+   try{
+  const rspns = await AXIOS.get(`http://localhost:9000/api/admin/purchasedproducts`)
+      console.log(rspns);
+      setPurchasedProducts(rspns.data)
+   }catch(err){
+   toast.error(err)
+  }    
+     }
+     fetchpurchasedProduct()
+    },[])
   return (
     <div style={{display:'flex'}}>
     <Sidebar />
@@ -20,14 +33,14 @@ const BuyProduct = () => {
       </tr>
     </thead>
     {
-        buy.map((item)=>(
+        purchasedProducts.map((item)=>(
           <tbody>
             <tr>
-              <td>{item.productName}</td>
-              <td>{item.Price}</td>
-              <td><img style={{height:'3rem'}} src={item.productImage} alt=''/></td>
-              <td>{item.qty}</td>
-              <td>{item.baby}</td>
+              <td>{item.title}</td>
+              <td>{item.price}</td>
+              <td><img style={{height:'3rem'}} src={item.image} alt=''/></td>
+              <td>{item.quantity}</td>
+              <td>{item.category}</td>
             </tr>
           </tbody>
         ))

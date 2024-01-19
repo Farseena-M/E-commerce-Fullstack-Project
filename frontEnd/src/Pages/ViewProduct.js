@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useContext } from 'react'
-import {Axios,userContext } from '../App'
+import {Axios} from '../App'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Button, Card, Container } from 'react-bootstrap'
 import Navigation from '../Components/Navigation'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+const userId = localStorage.getItem('userId')
+console.log(userId);
 
 const ViewProduct = () => {
     const Nvgt = useNavigate()
     const { id } = useParams();
     const [product, setProduct] = useState([])
-    const userId = localStorage.getItem('userId')
     console.log(userId);
 
     useEffect(() => {
@@ -33,14 +33,14 @@ const ViewProduct = () => {
 
     const handleCart = async () => {
       try{
-        const response = await Axios.post(`http://localhost:9000/api/users/cart/${userId}`,{product:id})
-        console.log(response);
-        if (response.status === 200){
+        const rspns = await Axios.post(`http://localhost:9000/api/users/cart/${userId}`,{product:id})
+        console.log(rspns);
+        if (rspns.status === 200){
             await Axios.get(`http://localhost:9000/api/users/cart/${userId}`)
             toast.success("Product added to the cart!")
           }
       }catch(err){
-        toast.error(err)
+        toast.error(err.message)
       }
     }
 
