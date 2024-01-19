@@ -21,6 +21,7 @@ import BuyProduct from "./Components/BuyProduct";
 import SignUp from "./Pages/SignUp";
 import axios from 'axios'
 import AddCategory from "./Components/addCategory";
+import CategoryForm from "./Components/categoryForm";
 
 export const userContext = createContext()
 
@@ -69,6 +70,7 @@ return (
       <Route path="/clctns" element={<Collections/>}></Route>
       <Route path="/view/:id" element={<ViewProduct/>}></Route>
       <Route path="/addcategory" element={<AddCategory/>}></Route>
+      <Route path="/categoryform" element={<CategoryForm/>}></Route>
     </Routes>
     </userContext.Provider>
     <ToastContainer/>
