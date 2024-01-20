@@ -19,8 +19,6 @@ import Add from "./Components/Add";
 import BuyProduct from "./Components/BuyProduct";
 import SignUp from "./Pages/SignUp";
 import axios from 'axios'
-import AddCategory from "./Components/addCategory";
-import CategoryForm from "./Components/categoryForm";
 import Wishlist from "./Pages/wishList";
 import All from "./Pages/All";
 
@@ -70,8 +68,6 @@ return (
       <Route path="/all" element={<All/>}></Route>
       <Route path="/view/:id" element={<ViewProduct/>}></Route>
       <Route path="/wishlist" element={<Wishlist/>}></Route>
-      {/* <Route path="/addcategory" element={<AddCategory/>}></Route> */}
-      {/* <Route path="/categoryform" element={<CategoryForm/>}></Route> */}
     </Routes>
     </userContext.Provider>
     <ToastContainer/>

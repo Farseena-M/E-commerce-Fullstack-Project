@@ -108,7 +108,7 @@ const Cart = () => {
     </div>
         ))}    
       </div>
-      <h2 style={{textAlign:'center'}}>Total Price</h2>
+      <h2 style={{textAlign:'center'}}>Total Price:</h2>
       <button onClick={handlePayment} style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',position:'relative',left:'600px',borderRadius:'8px',marginRight:'10px'}}>
       Buy Now</button>
       <button style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',position:'relative',left:'600px',borderRadius:'8px'}}>

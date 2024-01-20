@@ -33,7 +33,7 @@ const SignUp = () => {
         toast.error(err)
       })
     } catch (err) {
-      console.error(err);
+      toast.error(err);
     }
   }
   return (

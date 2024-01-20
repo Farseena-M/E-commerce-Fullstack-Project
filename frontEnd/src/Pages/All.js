@@ -43,7 +43,7 @@ const All = () => {
     try{
       const rspns = await Axios.post(`http://localhost:9000/api/users/wishlist/${userId}`,{product:id})
       console.log(rspns);
-      if (rspns.status === 201){
+      if (rspns.status === 200){
           await Axios.get(`http://localhost:9000/api/users/wishlist/${userId}`)
           toast.success("Product added to the wishlist!")
         }

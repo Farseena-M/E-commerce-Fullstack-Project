@@ -16,6 +16,7 @@ import Login from '../Pages/Login';
   const Navigation = () => {
   const {login,setLogin,setCart} =useContext(userContext)
  const Nvgtn=useNavigate()
+ const userName = localStorage.getItem('userName')
  const logout=()=>{
   if(login){
     setLogin(false)
@@ -52,7 +53,7 @@ import Login from '../Pages/Login';
        <p style={{position:'relative',right:'250px'}}>Welcome to {item.name}</p>)):''
         } */}
         <Nav style={{gap:'0.6rem',alignItems:'center'}}>
-          
+          <p>hi_{userName}</p>
           <Nav.Link onClick={()=>{Nvgtn('/cart')}} style={{fontSize:'27px'}} title='Cart'><BsFillCartFill /></Nav.Link> 
           <Nav.Link
               onClick={() => Nvgtn("/wishlist")}
@@ -62,7 +63,7 @@ import Login from '../Pages/Login';
                
                <FaHeart />
             </Nav.Link>
-          {localStorage.getItem('userToken')?
+          {login?
           <Nav.Link onClick={logout} style={{fontSize:'27px'}} title='Logout'><TbLogout /></Nav.Link>:
           <Nav.Link onClick={()=>{Nvgtn('/login')}} style={{fontSize:'27px'}} title='Login'><CgLogOut /></Nav.Link>}
           <Nav.Link  style={{fontSize:'27px'}} title='Admin'><RiAdminFill  onClick={()=>Nvgtn('/adminlogin')}/></Nav.Link>    

@@ -25,6 +25,8 @@ const Login = () => {
        localStorage.setItem('userToken',userToken)
        const userId = res.data.userDetails._id 
        localStorage.setItem('userId',userId)
+       const userName =  res.data.userDetails.username
+       localStorage.setItem('userName',userName)
        toast.success("User login Successfully")
        Nvgt('/')
       }).catch((err)=>{
