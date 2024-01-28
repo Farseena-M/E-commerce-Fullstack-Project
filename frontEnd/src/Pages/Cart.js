@@ -52,6 +52,11 @@ const Cart = () => {
     }
   }
 
+  const totalCartPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
 /*   const {cart,setCart,buy,setBuy} =useContext(userContext)
   const incrmnt=(id)=>{
  const newqty=cart.map((item)=>
@@ -87,7 +92,7 @@ const Cart = () => {
     <div style={{backgroundColor:'lightgrey'}}>
       <Navigation/>
     <Container  style={{alignItems:'center'}}className=' mt-4 p-4'>
-    <h1 style={{textAlign:'center',fontFamily:'serif'}}><u>Cart</u></h1>
+    <h1 style={{textAlign:'center',fontFamily:'serif'}}><u>My Cart</u></h1>
     <div  className='m-4 p-5 mt-4 d-flex align-items-center justify-content-center flex-wrap'>
        {
        cart.map((item)=>(
@@ -108,11 +113,14 @@ const Cart = () => {
     </div>
         ))}    
       </div>
-      <h2 style={{textAlign:'center'}}>Total Price:</h2>
-      <button onClick={handlePayment} style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',position:'relative',left:'600px',borderRadius:'8px',marginRight:'10px'}}>
+      <h2 style={{textAlign:'center'}}>Total Price:{totalCartPrice}</h2>
+      <div style={{textAlign:'center'}}>
+
+      <button onClick={handlePayment} style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',borderRadius:'8px',marginRight:'10px'}}>
       Buy Now</button>
-      <button style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',position:'relative',left:'600px',borderRadius:'8px'}}>
+      <button style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',borderRadius:'8px'}}>
       Clear</button>
+      </div>
     </Container>
     </div>
   )

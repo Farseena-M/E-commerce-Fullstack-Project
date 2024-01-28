@@ -12,7 +12,6 @@ import {TbLogout} from 'react-icons/tb'
 import { FaHeart } from "react-icons/fa";
 import { userContext } from '../App';
 import { toast } from 'react-toastify';
-import Login from '../Pages/Login';
   const Navigation = () => {
   const {login,setLogin,setCart} =useContext(userContext)
  const Nvgtn=useNavigate()
@@ -47,14 +46,8 @@ import Login from '../Pages/Login';
         </Nav>
       </Navbar.Collapse>
       <Navbar.Collapse style={{justifyContent:'end'}}>
-       {/*  {
-        login?
-        user.map((item)=>(
-       <p style={{position:'relative',right:'250px'}}>Welcome to {item.name}</p>)):''
-        } */}
         <Nav style={{gap:'0.6rem',alignItems:'center'}}>
           <p>hi_{userName}</p>
-          <Nav.Link onClick={()=>{Nvgtn('/cart')}} style={{fontSize:'27px'}} title='Cart'><BsFillCartFill /></Nav.Link> 
           <Nav.Link
               onClick={() => Nvgtn("/wishlist")}
               style={{ fontSize: "25px" }}
@@ -66,8 +59,8 @@ import Login from '../Pages/Login';
           {login?
           <Nav.Link onClick={logout} style={{fontSize:'27px'}} title='Logout'><TbLogout /></Nav.Link>:
           <Nav.Link onClick={()=>{Nvgtn('/login')}} style={{fontSize:'27px'}} title='Login'><CgLogOut /></Nav.Link>}
-          <Nav.Link  style={{fontSize:'27px'}} title='Admin'><RiAdminFill  onClick={()=>Nvgtn('/adminlogin')}/></Nav.Link>    
         </Nav>
+        <Nav.Link onClick={()=>{Nvgtn('/cart')}} style={{fontSize:'27px'}} title='Cart'><BsFillCartFill /></Nav.Link> 
       </Navbar.Collapse> 
   </Container>
   </Navbar> 

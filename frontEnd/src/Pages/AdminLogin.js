@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react'
-import { Button, Container, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import logo from '../Components/Assets/Babyshh.png'
+import imglogin from '../Components/Assets/login.jpg'
 import axios  from 'axios'
 
 const AdminLogin = () => {
@@ -32,24 +33,53 @@ const AdminLogin = () => {
     }
    }
   return (
-    <Container style={{alignItems:'center'}} className=' mt-4 p-4'>
-    <div className='m-4 p-5 mt-4 d-flex align-items-center justify-content-center flex-wrap'>
-      <div className='shadow p-4 mt-5' style={{alignItems:'center',width:'650px', height:'350px',border:'1px',borderRadius:'8px' ,backgroundColor:'lightgrey'}}>
-     <Form className='p-4 m-4'>
-      <h2 style={{textAlign:'center'}}>Admin Login</h2><br/>
-     <Form.Group className="mb-3" controlId="formGroupEmail">
-        <Form.Control type="text" placeholder="Enter Username" style={{width:'500px'}} ref={adminName} required />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formGroupPassword" style={{width:'500px'}}>
-        <Form.Control type="password" placeholder="Enter Password" ref={adminPass} required /><br/>
-        {error &&
-       (<p style={{textAlign:'center',color:'red'}}>{error}</p>)}
-        <Button onClick={hndlChng} style={{position:'relative',left:'200px',backgroundColor:'black',border:'none'}} type="button">Login</Button>
-      </Form.Group>
-      </Form>
+    <>
+ <section className="vh-100" style={{"background-color": "grey"}}>
+  <div className="container py-5 h-100">
+    <div className="row d-flex justify-content-center align-items-center h-100">
+      <div className="col col-xl-10">
+        <div className="card" style={{"border-radius": "1rem;"}}>
+          <div className="row g-0">
+            <div className="col-md-6 col-lg-5 d-none d-md-block">
+              <img src={imglogin} 
+                alt="login form" className="img-fluid" style={{"border-radius": "1rem 0 0 1rem;","height":"680px"}} />
+            </div>
+            <div className="col-md-6 col-lg-7 d-flex align-items-center">
+              <div className="card-body p-4 p-lg-5 text-black">
+
+                <form>
+
+                  <div className="d-flex align-items-center mb-3 pb-1">
+                    <span className="h1 fw-bold mb-0"><img style={{height:'100px'}} src={logo} alt='logo'/></span>
+                  </div>
+
+                  <h5 className="fw-normal mb-3 pb-3" style={{"letter-spacing": "1px;"}}>Sign into your account</h5>
+
+                  <div className="form-outline mb-4">
+                    <input type="username" id="form2Example17" className="form-control form-control-lg" ref={adminName}/>
+                    <label className="form-label" for="form2Example17">Username</label>
+                  </div>
+
+                  <div className="form-outline mb-4">
+                    <input type="password" id="form2Example27" className="form-control form-control-lg" ref={adminPass}/>
+                    <label className="form-label" for="form2Example27">Password</label>
+                  </div>
+
+                  <div className="pt-1 mb-4">
+                    <button className="btn btn-dark btn-lg btn-block" type="button" onClick={hndlChng}>Login</button>
+                  </div>
+
+                  {/* <a className="small text-muted" href="#!">Forgot password?</a> */}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    </div>
-    </Container>
+  </div>
+</section>
+    </>
 )
 }
 
