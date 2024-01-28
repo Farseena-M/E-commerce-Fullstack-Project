@@ -74,7 +74,7 @@ const SignUp = () => {
                   </div>
 
                   <div className="pt-1 mb-4">
-                    <button className="btn btn-dark btn-lg btn-block" type="button" onClick={handleChange}>SignUp</button>
+                    <button className="btn btn-dark btn-lg btn-block" type="button" onClick={handleChange} style={{"width":"100%"}}>SignUp</button>
                   </div>
                 </form>
 

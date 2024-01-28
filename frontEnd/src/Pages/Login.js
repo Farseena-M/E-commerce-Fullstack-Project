@@ -69,8 +69,8 @@ const Login = () => {
                   </div>
 
                   <div className="pt-1 mb-4">
-                    <button className="btn btn-dark btn-lg btn-block" type="button" onClick={handleClick}>Login</button>
-                    <button className="btn btn-dark btn-lg btn-block" type="button" style={{"marginLeft":"10px"}} onClick={()=>Nvgt('/adminlogin')}>AdminLogin</button>
+                    <button className="btn btn-dark btn-lg btn-block" type="button" onClick={handleClick} style={{"width":"100%","marginBottom":"15px"}}>Login</button>
+                    <button className="btn btn-dark btn-lg btn-block" type="button"  onClick={()=>Nvgt('/adminlogin')} style={{"width":"100%"}}>AdminLogin</button>
                   </div>
 
                   {/* <a className="small text-muted" href="#!">Forgot password?</a> */}
