@@ -5,6 +5,7 @@ import { Button, Card, Container } from 'react-bootstrap'
 import Navigation from '../Components/Navigation'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import Footer from '../Components/Footer'
 const Cart = () => {
   const Nvgt = useNavigate()
   const [cart,setCart] =useState([])
@@ -89,40 +90,82 @@ const Cart = () => {
      } */
 
   return (
-    <div style={{backgroundColor:'lightgrey'}}>
+    <>
+     <div className="vh-100" style={{backgroundColor:'lightgrey'}}>
       <Navigation/>
-    <Container  style={{alignItems:'center'}}className=' mt-4 p-4'>
-    <h1 style={{textAlign:'center',fontFamily:'serif'}}><u>My Cart</u></h1>
-    <div  className='m-4 p-5 mt-4 d-flex align-items-center justify-content-center flex-wrap'>
-       {
-       cart.map((item)=>(
-          <div key={item._id}>
-      <Card className="shadow p-5 m-1 bg-body-tertiary rounded" style={{ width: '23rem', height: '30rem', alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-      <Card.Img variant="top" src={item.image} style={{height:"200px",width:'250px'}}/>
-      <Card.Body>
-        <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>{item.title}</Card.Title>
-        <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>Price:{item.price}</Card.Title>
-        <div style={{position:'relative',right:'40px'}}><h6 style={{alignItems:'center',position:'relative',left:'70px'}}>qty:{item.quantity}<br/>
-          <Button className='m-1' style={{backgroundColor:'black',border:'none',position:'relative',right:'15px'}}>-</Button>
-          <Button  className='m-1' style={{backgroundColor:'black',border:'none',position:'relative',right:'15px'}}>+</Button></h6>
-          </div>
-          {/* <h6 style={{textAlign:'center'}}>Total</h6>      */}
-          <Button onClick={()=>removeCartItem(item._id)} style={{backgroundColor:'black',marginLeft:'10px',border:'none'}}>Remove</Button>
-      </Card.Body>
-    </Card><br/>
-    </div>
-        ))}    
+      <div className="continer" style={{ color: "white" }}>
+        <h1 className="mt-4" style={{textAlign:'center',color:'black '}}>Your Cart</h1>
+        <ul className="list-group">
+          {cart.map((item) => (
+            <li
+              key={item._id}
+              className="list-group-item d-flex justify-content-between align-items-center"
+              style={{ backgroundColor: "" }}
+            >
+              <div>
+                <h5>{item.title}</h5>
+                <p>
+                  {" "}
+                  <i class="bi bi-currency-rupee"></i>
+                  ${item.price}
+                  
+                </p>
+                <div className="input-group">
+                  <button
+                    // onClick={() => cartDegrement(item)}
+                    type="button"
+                    className="btn btn-outline-secondary"
+                  >
+                    -
+                  </button>
+                  <button
+                    // onClick={() => cartIncrement(item)}
+                    type="button"
+                    className="btn btn-outline-secondary"
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => removeCartItem(item._id)}
+                    type="button"
+                    className="btn btn-outline-danger"
+                  >
+                    Remove
+                  </button>
+                  <button
+                    onClick={handlePayment}
+                    type="button"
+                    className="btn btn-outline-success "
+                  >
+                    Buy now
+                  </button>
+                </div>
+              </div>
+              <div>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  style={{ width: "100px" }}
+                />
+                <p>Quantity :{item.quantity}</p>
+                {/* <p>
+                  Total : <i class="bi bi-currency-rupee"></i>
+                </p> */}
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div className="d-flex justify-content-between align-items-center">
+          <h2 className="mt-3" style={{ fontSize: "25px", fontWeight: 600 ,color:'black'}}>
+            Your Total Amount : ${totalCartPrice}
+          </h2>
+          <p className="mt-3" style={{ fontSize: "25px", fontWeight: 600 }}>
+            {/* <i class="bi bi-currency-rupee"></i>{totalAmount} */}
+          </p>
+        </div>
       </div>
-      <h2 style={{textAlign:'center'}}>Total Price:{totalCartPrice}</h2>
-      <div style={{textAlign:'center'}}>
-
-      <button onClick={handlePayment} style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',borderRadius:'8px',marginRight:'10px'}}>
-      Buy Now</button>
-      <button style={{height:"40px",width:'85px',border:'none',backgroundColor:'black',color:'white',borderRadius:'8px'}}>
-      Clear</button>
-      </div>
-    </Container>
-    </div>
+     </div>
+    </>
   )
 }
 export default Cart 

@@ -60,7 +60,7 @@ const ViewProduct = () => {
     return (
         <div style={{ backgroundColor: 'lightgrey', position: 'absolute', height: '100%', width: '100%' }}>
             <Navigation />
-<section style={{"background-color": "#eee;","height":"600px"}}>
+<section style={{"background-color": "#eee;"}}>
   <div className="container py-5" >
     <div className="row justify-content-center mb-3" >
       <div className="col-md-12 col-xl-10" >
@@ -94,10 +94,10 @@ const ViewProduct = () => {
                 <h6 className="text-success">Free shipping</h6>
                 <div className="d-flex flex-column mt-4">
                   {/* <button className="btn btn-primary btn-sm" type="button">Details</button> */}
-                  <button className="btn btn-outline-primary btn-sm mt-2" type="button" onClick={()=>addToWishList(item._id)}>
+                  <button className="btn btn-outline-dark btn-sm mt-2" type="button" onClick={()=>addToWishList(item._id)}>
                     Add to wishlist
                   </button>
-                  <button className="btn btn-outline-primary btn-sm mt-2" type="button" onClick={handleCart}>
+                  <button className="btn btn-outline-dark btn-sm mt-2" type="button" onClick={handleCart}>
                     Add to cart
                   </button>
                 </div>
@@ -111,7 +111,7 @@ const ViewProduct = () => {
   </div>
 </section>
 <Footer />
-        </div>
+</div>
     )
 }
 

@@ -45,11 +45,11 @@ const Prdcts = () => {
        prdct.map((item)=>(
           <div>
      <Card className="shadow p-5 m-1 bg-body-tertiary rounded" style={{ width: '23rem', height: '28rem', alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-     <CardSubtitle title="wishlist" style={{display:'flex',position:'relative',right:'150px',top:'0.5px',fontSize:'22px',cursor:'pointer'}} onClick={()=>addToWishList(item._id)}><    FaHeart /></CardSubtitle>
+     <CardSubtitle title="wishlist" style={{display:'flex',position:'relative',right:'150px',top:'0.5px',fontSize:'22px',cursor:'pointer',color:'grey'}} onClick={()=>addToWishList(item._id)}><    FaHeart /></CardSubtitle>
       <Card.Img variant="top" src={item.image}style={{height:"200px",width:'250px'}}/>
       <Card.Body>
         <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>{item.title}</Card.Title>
-        <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>Price:{item.price}</Card.Title><br/><br/>
+        <Card.Title style={{fontFamily:'serif',textAlign:'center'}}>${item.price}</Card.Title><br/><br/>
         <Button onClick={()=>Nvgt(`/view/${item._id}`)} style={{backgroundColor:'black',border:'none'}} variant="primary">View product</Button>
       </Card.Body>
       </Card>
