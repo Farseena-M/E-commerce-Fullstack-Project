@@ -5,6 +5,7 @@ import { Button, Card, Container } from 'react-bootstrap'
 import Navigation from '../Components/Navigation'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import Footer from '../Components/Footer'
 const userId = localStorage.getItem('userId')
 console.log(userId);
 
@@ -43,94 +44,76 @@ const ViewProduct = () => {
         toast.error(err.message)
       }
     }
+    const addToWishList=async(id)=>{
+      try{
+        const rspns = await Axios.post(`http://localhost:9000/api/users/wishlist/${userId}`,{product:id})
+        console.log(rspns);
+        if (rspns.status === 200){
+            await Axios.get(`http://localhost:9000/api/users/wishlist/${userId}`)
+            toast.success("Product added to the wishlist!")
+          }
+      }catch(err){
+        toast.error(err.message)
+      }
+    }
 
     return (
         <div style={{ backgroundColor: 'lightgrey', position: 'absolute', height: '100%', width: '100%' }}>
             <Navigation />
-            <Container style={{ alignItems: 'center' }} className=' mt-4 p-4'>
-                <div className='m-4 p-5 mt-4 d-flex align-items-center justify-content-center flex-wrap'>
-                    {
-                        a.map((item) => (
-                            <div>
-                                <Card className="shadow p-5 m-1 bg-body-tertiary rounded" style={{ width: '23rem', height: '28rem', alignItems: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                    <Card.Img variant="top" src={item.image} style={{ height: "250px", width: '250px' }} />
-                                    <Card.Body>
-                                        <Card.Title style={{ fontFamily: 'serif', textAlign: 'center' }}>{item.title}</Card.Title>
-                                        {/* <Card.Title style={{ fontFamily: 'serif', textAlign: 'center' }}>{item.description}</Card.Title> */}
-                                        <Card.Title style={{ fontFamily: 'serif', textAlign: 'center' }}>{item.price}</Card.Title>
-                                        {/* {cart.find((crtItm) => crtItm.id === item.id) ? */}
-                                            {/* <Button onClick={() => Nvgt(`/cart/${userId}`)} style={{ backgroundColor: 'black', border: 'none' }}>Go to cart</Button>  */}
-                                            <Button onClick={handleCart} style={{ backgroundColor: 'black', border: 'none' }}>Add to cart</Button>
-                                </Card.Body>
-                            </Card><br />
-                        </div>
-                    ))}
+<section style={{"background-color": "#eee;","height":"600px"}}>
+  <div className="container py-5" >
+    <div className="row justify-content-center mb-3" >
+      <div className="col-md-12 col-xl-10" >
+        {a.map((item)=>(
+        <div className="card shadow-0 border rounded-3">
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                <div className="bg-image hover-zoom ripple rounded ripple-surface">
+                  <img src={item.image}
+                    className="w-100" style={{"height":"300px"}}/>
+                  <a href="#!">
+                    <div className="hover-overlay">
+                      <div className="mask" style={{"background-color": "rgba(253, 253, 253, 0.15);"}}></div>
+                    </div>
+                  </a>
                 </div>
-            </Container>
+              </div>
+              <div className="col-md-6 col-lg-6 col-xl-6">
+                <h1>{item.title}</h1>
+                <div className="d-flex flex-row">
+                
+                </div>
+                <p className="text-truncate mb-4 mb-md-0">{item.description}</p>
+              </div>
+              <div className="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                <div className="d-flex flex-row align-items-center mb-1">
+                  <h1 className="mb-1 me-1">${item.price}</h1>
+                  {/* <span className="text-danger"><s>$20.99</s></span> */}
+                </div>
+                <h6 className="text-success">Free shipping</h6>
+                <div className="d-flex flex-column mt-4">
+                  {/* <button className="btn btn-primary btn-sm" type="button">Details</button> */}
+                  <button className="btn btn-outline-primary btn-sm mt-2" type="button" onClick={()=>addToWishList(item._id)}>
+                    Add to wishlist
+                  </button>
+                  <button className="btn btn-outline-primary btn-sm mt-2" type="button" onClick={handleCart}>
+                    Add to cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+<Footer />
         </div>
     )
 }
 
 export default ViewProduct
 
-
-
-
-
-
-
-
-
-
-/* return (
-     <div class="card card-body mt-3">
-                          <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
-                              <div class="mr-2 mb-3 mb-lg-0">
-                                  
-                                       <img src="" width="150" height="150" alt=""> 
-                                 
-                              </div>
-
-                              <div class="media-body">
-                                  <h6 class="media-title font-weight-semibold">
-                                      <a href="#" data-abc="true">Apple iPhone XS Max (Gold, 64 GB)</a>
-                                  </h6>
-
-                                  <ul class="list-inline list-inline-dotted mb-3 mb-lg-2">
-                                      <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Phones</a></li>
-                                      <li class="list-inline-item"><a href="#" class="text-muted" data-abc="true">Mobiles</a></li>
-                                  </ul>
-
-                                  <p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto ea,<br /> praesentium ratione illum veritatis culpa provident quisquam soluta tenetur nisi. Aperiam laudantium esse sed,
-                                  <br /> error doloremque ratione laboriosam totam possimus. </p>
-
-                                  <ul class="list-inline list-inline-dotted mb-0">
-                                      <li class="list-inline-item">All items from <a href="#" data-abc="true">Mobile junction</a></li>
-                                      <li class="list-inline-item">Add to <a href="#" data-abc="true">wishlist</a></li>
-                                  </ul>
-                              </div>
-
-                              <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                  <h3 class="mb-0 font-weight-semibold">$612.99</h3>
-
-                                  <div>
-                                      <i class="fa fa-star"></i>
-                                      <i class="fa fa-star"></i>
-                                      <i class="fa fa-star"></i>
-                                      <i class="fa fa-star"></i>
-                                      <i class="fa fa-star"></i>
-
-                                  </div>
-
-                                  <div class="text-muted">2349 reviews</div>
-
-                                  <button type="button" class="btn btn-warning mt-4 text-white"><i class="icon-cart-add mr-2"></i> Add to cart</button>
-                              
-                              </div>
-
-                          </div>
-                      </div>   
-)
-}
-
-export default ViewProduct */
