@@ -40,7 +40,6 @@ const AdminPrdcts = () => {
      <Table striped bordered hover size="sm" style={{margin:'0 auto'}}>
     <thead>
       <tr>
-        <th>Id</th>
         <th>Name</th>
         <th>Price</th>
         <th>Image</th>
@@ -53,7 +52,6 @@ const AdminPrdcts = () => {
         product.map((item)=>(
           <tbody>
             <tr>
-              <td>{item._id}</td>
               <td>{item.title}</td>
               <td>{item.price}</td>
               <td><img style={{height:'3rem'}} src={item.image} alt=''/></td>

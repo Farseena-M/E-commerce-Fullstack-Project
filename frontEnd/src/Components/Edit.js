@@ -52,7 +52,7 @@ const Edit = () => {
   return (
     <div style={{display:'flex'}}>
       <Sidebar />
-      <div style={{flex:'1',textAlign:'center'}}>
+      <div style={{flex:'1',textAlign:'center',backgroundColor:'grey',height:'990px',width:'100%'}}>
         <h1 style={{fontFamily:'sans-serif',padding:'10px',position:'relative',top:'30px',color:'#333'}}>Edit Product</h1><br /><hr />
        <Form>
         <label style={{fontSize:'20px',fontFamily:'italic'}}> Product Name </label><br />

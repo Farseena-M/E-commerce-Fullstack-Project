@@ -54,7 +54,7 @@ const Add = () => {
   return (
     <div className='d-flex'>
         <Sidebar/>
-        <div style={{flex:'1',textAlign:'center',backgroundColor:'grey',height:'850px',width:'100%'}}>
+        <div style={{flex:'1',textAlign:'center',backgroundColor:'grey',height:'990px',width:'100%'}}>
         <h1 style={{fontFamily:'sans-serif',padding:'10px',position:'relative',top:'30px',color:'#333'}}>Add Product</h1><br /><hr />
           <Form onSubmit={handleSubmit}>
             <label  style={{fontSize:'20px',fontFamily:'italic'}} >Product Name</label><br />
