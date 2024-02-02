@@ -90,42 +90,6 @@ const All = () => {
         ))}
         </div>
         </Container>
-
-{/* <section style={{"background-color": "lightgrey"}}>
-  <div class="text-center container py-5 ">
-    <div class="row">
-      <div class="col-lg-4 col-md-12 mb-4 ">
-      {
-       Searches.map((item)=>(
-        <div class="card" >
-          <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
-            data-mdb-ripple-color="light" >
-            <img src={item.image}
-              class="w-100" style={{height:'300px',width:'300px'}}/>
-            <a href="#!">
-              <div class="mask">
-                <div class="d-flex justify-content-start align-items-end h-100">
-                <CardSubtitle title="wishlist" style={{display:'flex',position:'relative',left:'40px',top:'20px',fontSize:'22px',cursor:'pointer'}} onClick={()=>addToWishList(item._id)}><    FaHeart /></CardSubtitle>
-                </div>
-              </div>
-              <div class="hover-overlay">
-                <div class="mask" style={{"background-color": "rgba(251, 251, 251, 0.15);"}}></div>
-              </div>
-            </a>
-          </div>
-          <div class="card-body">
-            <a href="" class="text-reset">
-              <h2 class="card-title mb-3">{item.title}</h2>
-            </a>
-            <h5 class="mb-3">${item.price}</h5>
-          </div>
-          <Button onClick={()=>Nvgt(`/view/${item._id}`)} style={{backgroundColor:'grey',border:'none',alignItems:'center',color:'black'}}>View Product</Button>
-        </div>
-         ))}
-      </div>
-</div>
-</div>
-</section> */}
         <Footer/>
     </div>
   )

@@ -6,7 +6,7 @@ import imglogin from '../Components/Assets/login.jpg'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 const SignUp = () => {
-  const [error] = useState('')
+  const [error,setError] = useState(false)
   const { user, setUser } = useContext(userContext)
   const Nvgt = useNavigate()
   const reffname = useRef()
@@ -19,6 +19,10 @@ const SignUp = () => {
     const refEmail = reffEmail.current.value
     const value = { name: refname, pass: refPass, email: refEmail }
     setUser([...user, value]);
+    if(refname.length === 0 || refPass.length === 0 || refEmail.length === 0){
+      setError(true)
+      toast.error(`Please fill in the blank`)
+    }
     try {
       const data = {
         "username": refname,

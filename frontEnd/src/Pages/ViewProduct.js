@@ -62,7 +62,7 @@ const ViewProduct = () => {
             <Navigation />
 <section style={{"background-color": "#eee;"}}>
   <div className="container py-5" >
-    <div className="row justify-content-center mb-3" >
+    <div className="row  justify-content-center mb-3" >
       <div className="col-md-12 col-xl-10" >
         {a.map((item)=>(
         <div className="card shadow-0 border rounded-3">
@@ -110,7 +110,7 @@ const ViewProduct = () => {
     </div>
   </div>
 </section>
-<Footer />
+{/* <Footer /> */}
 </div>
     )
 }
