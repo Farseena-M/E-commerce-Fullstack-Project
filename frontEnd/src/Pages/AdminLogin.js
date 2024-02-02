@@ -7,13 +7,17 @@ import axios  from 'axios'
 
 const AdminLogin = () => {
   const Nvgt=useNavigate()
-  const [error]=useState('')
+  const [error,setError]=useState(false)
   const adminName=useRef()
   const adminPass=useRef()
   const hndlChng = async(e) => {
     e.preventDefault()
     const LadminName=adminName.current.value;
     const LadminPass=adminPass.current.value;
+    if(LadminName.length === 0 || LadminPass.length === 0 ){
+      setError(true)
+      toast.warning(`Please fill in the blank`)
+    }
     try {
       const data = {
         "username": LadminName,

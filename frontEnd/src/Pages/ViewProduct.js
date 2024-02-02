@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {Axios} from '../App'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Button, Card, Container } from 'react-bootstrap'
 import Navigation from '../Components/Navigation'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import Footer from '../Components/Footer'
 const userId = localStorage.getItem('userId')
 console.log(userId);
 
@@ -41,7 +39,7 @@ const ViewProduct = () => {
             toast.success("Product added to the cart!")
           }
       }catch(err){
-        toast.error(err.message)
+        toast.error( `Product already added to the cart`)
       }
     }
     const addToWishList=async(id)=>{
@@ -53,7 +51,7 @@ const ViewProduct = () => {
             toast.success("Product added to the wishlist!")
           }
       }catch(err){
-        toast.error(err.message)
+        toast.error( `Product already added to the wishlist`)
       }
     }
 

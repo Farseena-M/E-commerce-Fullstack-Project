@@ -21,7 +21,7 @@ const SignUp = () => {
     setUser([...user, value]);
     if(refname.length === 0 || refPass.length === 0 || refEmail.length === 0){
       setError(true)
-      toast.error(`Please fill in the blank`)
+      toast.warning(`Please fill in the blank`)
     }
     try {
       const data = {

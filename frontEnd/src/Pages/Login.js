@@ -1,11 +1,11 @@
 import React, {  useRef, useState } from 'react'
-import {  Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import logo from '../Components/Assets/Babyshh.png'
 import imglogin from '../Components/Assets/login.jpg'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 const Login = () => {
-  const [error] =useState('')
+  const [error,setError] =useState(false)
   const Nvgt=useNavigate()
    const Lreffname=useRef()
    const LreffPass=useRef() 
@@ -13,6 +13,10 @@ const Login = () => {
     e.preventDefault()
    const newLreffName=Lreffname.current.value
     const newLreffPass=LreffPass.current.value
+    if(newLreffName.length === 0 || newLreffPass.length === 0 ){
+      setError(true)
+      toast.warning(`Please fill in the blank`)
+    }
     try{
       const data = {
         "username" :newLreffName,
