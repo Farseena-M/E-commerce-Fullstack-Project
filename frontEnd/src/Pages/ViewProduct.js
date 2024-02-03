@@ -108,7 +108,6 @@ const ViewProduct = () => {
     </div>
   </div>
 </section>
-{/* <Footer /> */}
 </div>
     )
 }
