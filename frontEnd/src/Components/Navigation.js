@@ -56,11 +56,11 @@ import { toast } from 'react-toastify';
                
                <FaHeart />
             </Nav.Link>
+            <Nav.Link onClick={()=>{Nvgtn('/cart')}} style={{fontSize:'27px'}} title='Cart'><BsFillCartFill /></Nav.Link> 
           {login?
           <Nav.Link onClick={logout} style={{fontSize:'27px'}} title='Logout'><TbLogout /></Nav.Link>:
           <Nav.Link onClick={()=>{Nvgtn('/login')}} style={{fontSize:'27px'}} title='Login'><CgLogOut /></Nav.Link>}
         </Nav>
-        <Nav.Link onClick={()=>{Nvgtn('/cart')}} style={{fontSize:'27px'}} title='Cart'><BsFillCartFill /></Nav.Link> 
       </Navbar.Collapse> 
   </Container>
   </Navbar> 

@@ -35,11 +35,11 @@ const Wishlist = () => {
     const RemoveCartItem=async(id)=>{
       try {
         const productId=id;
-        const response=await Axios.delete(`http://localhost:9000/api/users/wishlist/${userId}`,{
+        const res=await Axios.delete(`http://localhost:9000/api/users/wishlist/${userId}`,{
           data: { productId: productId }  
         })
         fetchwishlist()
-        console.log(response);
+        console.log(res);
       } catch (err) {
         console.log("error fetching the product");
         toast.error(err);
