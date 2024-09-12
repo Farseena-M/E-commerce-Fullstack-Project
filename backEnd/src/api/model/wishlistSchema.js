@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const user = require('./userSchema')
 const products = require('./productSchema')
+
 const wishlistSchema = new mongoose.Schema({
     User :{
         type :  mongoose.Schema.Types.ObjectId,

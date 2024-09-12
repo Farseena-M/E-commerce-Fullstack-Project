@@ -29,7 +29,7 @@ const login = asyncErrorHandler(async(req,res)=>{
   
 
   if(!username || !password){
-    res.status(404).json({message:'Please provide username & Password for login in!'})
+    res.status(404).json({message:'Please provide username & Password for logged in!'})
   }
       
   const userDetails = await user.findOne({username}).select('+password')

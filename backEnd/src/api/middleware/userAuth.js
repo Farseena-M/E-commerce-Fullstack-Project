@@ -16,7 +16,7 @@ module.exports=function verifyToken(req,res,next){
     }
     jwt.verify(token,process.env.SECRET_STR,(err,decode)=>{
         if(err) {
-            return res.status(401).json({message: "Unathorazed"})
+            return res.status(401).json({message: "unauthorized"})
         }
         req.email=decode.email
         next()
