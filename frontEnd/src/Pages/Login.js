@@ -4,12 +4,15 @@ import logo from '../Components/Assets/Babyshh.png';
 import imglogin from '../Components/Assets/login.jpg';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useAuthContext } from '../Context/AuthContext';
 
 const Login = () => {
   const [error, setError] = useState(false);
   const Nvgt = useNavigate();
   const Lreffname = useRef();
   const LreffPass = useRef();
+  const { setAuthUser } = useAuthContext();
+
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -28,15 +31,14 @@ const Login = () => {
         .then((res) => {
           const userToken = res.data.token;
           localStorage.setItem('userToken', userToken);
-          const userId = res.data.userDetails._id;
-          localStorage.setItem('userId', userId);
-          const userName = res.data.userDetails.username;
-          localStorage.setItem('userName', userName);
+          const Data = res.data.userDetails
+          localStorage.setItem('user', JSON.stringify(Data))
+          setAuthUser(Data)
           toast.success('User login Successfully');
           Nvgt('/');
         })
         .catch((err) => {
-          toast.error(err.message);
+          console.error(err.message);
         });
     } catch (err) {
       console.error(err);

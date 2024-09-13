@@ -27,7 +27,7 @@ export const userContext = createContext()
 export const Axios = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:9000/",
   headers: {
-    Authorization: localStorage.getItem("userToken")
+    Authorization: `Bearer ${localStorage.getItem('userToken')}` 
   }
 })
 

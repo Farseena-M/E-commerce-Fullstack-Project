@@ -1,69 +1,160 @@
-import React, { useContext} from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {BsFillCartFill} from 'react-icons/bs'
-import {CgLogOut} from 'react-icons/cg'
+import { BsFillCartFill } from 'react-icons/bs';
+import { CgLogOut } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
-import {RiAdminFill} from 'react-icons/ri'
-import logo from '../Components/Assets/Babyshh.png'
-import { Dropdown } from 'react-bootstrap';
-import {TbLogout} from 'react-icons/tb'
+import logo from '../Components/Assets/Babyshh.png';
+import { Dropdown, NavLink } from 'react-bootstrap';
+import { TbLogout } from 'react-icons/tb';
 import { FaHeart } from "react-icons/fa";
-import { userContext } from '../App';
 import { toast } from 'react-toastify';
-  const Navigation = () => {
-  const {login,setLogin,setCart} =useContext(userContext)
- const Nvgtn=useNavigate()
- const userName = localStorage.getItem('userName')
- const logout=()=>{
-  if(login){
-    setLogin(false)
-    setCart([])
-    toast.success('Logout Success')
-  }else{
-    toast.error('Please Login')
-    Nvgtn('/login')
-  }
- }
+import { useAuthContext } from '../Context/AuthContext';
+
+const Navigation = () => {
+  const { authUser, setAuthUser } = useAuthContext();
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('userToken');
+    setAuthUser(null);
+    toast.success('Logout Success');
+    navigate('/login');
+  };
+
   return (
-    <Navbar style={{backgroundColor:'white',height:'85px',width:'100%'}} expand="lg"sticky='top'>
-    <Container fluid>
-      <Navbar.Brand  style={{cursor:'pointer'}} onClick={()=>Nvgtn('/')}><img src={logo} alt='logo'/></Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto">
-          <Nav.Link style={{fontFamily:'serif'}}onClick={()=>Nvgtn('/all')}><h2>All</h2></Nav.Link>
-          <Dropdown>
-      <Dropdown.Toggle variant="" id="dropdown-basic"  style={{fontFamily:'serif',fontSize:'30px',fontWeight:'1px'}}>
-        Collections
-        </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <Dropdown.Item onClick={()=>{Nvgtn('/cloths')}}><h6 style={{fontFamily:'serif',fontSize:'20px',fontWeight:'1px'}}>Baby Cloths</h6></Dropdown.Item>
-        <Dropdown.Item onClick={()=>{Nvgtn('/Prdcts')}}><h6 style={{fontFamily:'serif',fontSize:'20px',fontWeight:'1px'}}>Baby Products</h6></Dropdown.Item>
-      </Dropdown.Menu>
-      </Dropdown>
-        </Nav>
-      </Navbar.Collapse>
-      <Navbar.Collapse style={{justifyContent:'end'}}>
-        <Nav style={{gap:'0.6rem',alignItems:'center'}}>
-          <p>hi_{userName}</p>
-          <Nav.Link
-              onClick={() => Nvgtn("/wishlist")}
-              style={{ fontSize: "25px" }}
-              title="wishlist"
+    <Navbar
+      style={{
+        backgroundColor: 'white',
+        height: '70px',
+        width: '100%',
+        padding: '0 20px',
+        fontFamily: 'Arial, sans-serif',
+      }}
+      expand="lg"
+      sticky='top'
+    >
+      <Container fluid>
+        <Navbar.Brand
+          style={{
+            cursor: 'pointer',
+            padding: '0',
+          }}
+          onClick={() => navigate('/')}
+        >
+          <img
+            src={logo}
+            alt='logo'
+            style={{
+              height: '40px',
+              width: 'auto',
+            }}
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link
+              style={{
+                fontFamily: 'Arial, sans-serif',
+                fontSize: '16px',
+                padding: '0 20px',
+              }}
+              onClick={() => navigate('/all')}
             >
-               
-               <FaHeart />
+              <h3 style={{ margin: '0', fontSize: '24px' }}>Collections</h3>
             </Nav.Link>
-            <Nav.Link onClick={()=>{Nvgtn('/cart')}} style={{fontSize:'27px'}} title='Cart'><BsFillCartFill /></Nav.Link> 
-          {login?
-          <Nav.Link onClick={logout} style={{fontSize:'27px'}} title='Logout'><TbLogout /></Nav.Link>:
-          <Nav.Link onClick={()=>{Nvgtn('/login')}} style={{fontSize:'27px'}} title='Login'><CgLogOut /></Nav.Link>}
-        </Nav>
-      </Navbar.Collapse> 
-  </Container>
-  </Navbar> 
-   )
-}
-export default Navigation
+            <Dropdown>
+              <Dropdown.Toggle
+                variant=""
+                id="dropdown-basic"
+                style={{
+                  fontFamily: 'Arial, sans-serif',
+                  fontSize: '16px',
+                  fontWeight: 'normal',
+                  padding: '0 10px',
+                }}
+              >
+                Shop Now
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => navigate('/cloths')}
+                  style={{ fontFamily: 'Arial, sans-serif', fontSize: '14px' }}
+                >
+                  Baby Cloths
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => navigate('/Prdcts')}
+                  style={{ fontFamily: 'Arial, sans-serif', fontSize: '14px' }}
+                >
+                  Baby Products
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Nav>
+        </Navbar.Collapse>
+        <Navbar.Collapse style={{ justifyContent: 'end' }}>
+          <Nav style={{ gap: '0.6rem', alignItems: 'center' }}>
+            {authUser && (
+              <p
+                style={{
+                  fontSize: '16px',
+                  margin: '0',
+                  color: 'gray',
+                  fontFamily: 'Georgia, serif',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  backgroundColor: '#f0f8ff',
+                  padding: '5px',
+                  borderRadius: '4px',
+                }}
+              >
+                Hi, {authUser.username}
+              </p>
+            )}
+            <Nav.Link
+              onClick={() => navigate("/wishlist")}
+              style={{
+                fontSize: "20px",
+              }}
+              title="Wishlist"
+            >
+              <FaHeart style={{ color: 'red' }} />
+            </Nav.Link>
+            <Nav.Link
+              onClick={() => navigate('/cart')}
+              style={{
+                fontSize: '20px',
+              }}
+              title='Cart'
+            >
+              <BsFillCartFill />
+            </Nav.Link>
+            {authUser ? (
+              <button
+                onClick={logout}
+                className="text-2xl text-gray-800 hover:text-gray-600 transition-colors duration-300"
+                title="Logout"
+              >
+                <TbLogout />
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate('/login')}
+                className="text-2xl text-gray-800 hover:text-gray-600 transition-colors duration-300"
+                title="Login"
+              >
+                <CgLogOut />
+              </button>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
+
+export default Navigation;
