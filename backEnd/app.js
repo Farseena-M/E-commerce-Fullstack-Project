@@ -2,10 +2,10 @@ const express=require('express');
 const app=express();
 const morgan = require('morgan')
 const authRouter = require('./src/api/router/authRouter')
-const usrRouter=require('./src/api/Router/userRouter')
 const globalErrorHandler = require('./src/api/controller/errorController')
 const adminRouter =require('./src/api/router/adminRouter')
-const cors = require('cors')
+const cors = require('cors');
+const usrRouter = require('./src/api/router/userRouter');
 app.use(cors())
 app.use(express.json())
 app.use(morgan('dev'))

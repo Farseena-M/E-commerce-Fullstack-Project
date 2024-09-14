@@ -1,9 +1,11 @@
 const Cart = require('../model/cartSchema');
 const products = require('../model/productSchema');
-const user = require('../model/userSchema');
-const { Stripe } = require('stripe');
 const asyncErrorHandler = require('../utils/asyncErrorHandler');
 const Order = require('../model/orderSchema');
+const Stripe = require('stripe');
+const user = require('../model/userSchema');
+const ProductOrder = require('../model/productOrderSchema');
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const prdcts = asyncErrorHandler(async (req, res) => {
     const newProduct = await products.create(req.body)
@@ -58,7 +60,12 @@ const getProductById = asyncErrorHandler(async (req, res) => {
 })
 
 
-          //Order&Payment
+
+
+
+
+
+//Order&Payment
 
 
 const payment = asyncErrorHandler(async (req, res) => {
@@ -105,20 +112,18 @@ const payment = asyncErrorHandler(async (req, res) => {
         line_items: lineItem,
         mode: 'payment',
         customer: customer.id,
-        success_url: 'http://localhost:9000/api/users/payment/success',
-        cancel_url: 'http://localhost:9000/api/users/payment/cancel'
+        success_url: `http://localhost:3000/users/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: 'http://localhost:3000/users/payment/cancel',
+        metadata: {
+            userId,
+            prdcts: JSON.stringify(cartModel.Product),
+            purchaseDate: new Date().toISOString(),
+            totalPrice: cartModel.TotalPrice
+        }
     })
 
     if (session) {
-        const order = new Order({
-            user: cartModel.User,
-            prdcts: PRDCT,
-            orderId: session.id,
-            totalPrice: cartModel.TotalPrice,
-            totalItems: cartModel.Product.length,
-            orderStatus: session.payment_status
-        })
-        await order.save()
+
         res.status(200).json({
             status: 'Success',
             session: session.url
@@ -130,13 +135,186 @@ const payment = asyncErrorHandler(async (req, res) => {
     }
 })
 
-const paymentSuccess = (req,res) =>{
-    res.send('<h1>Success</h1>')
-}
 
-const paymentCancel = (req,res) =>{
-    res.send('<h1>Cancel</h1>')
-}
+
+
+const confirmPayment = asyncErrorHandler(async (req, res) => {
+    const { sessionId } = req.body;
+
+    if (typeof sessionId !== 'string' || sessionId.trim() === '') {
+        return res.status(400).json({ status: 'Failed', message: 'Invalid session ID' });
+    }
+
+    try {
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        if (session.payment_status === 'paid') {
+            const { userId, prdcts, purchaseDate, totalPrice } = session.metadata;
+
+            const parsedPrdcts = JSON.parse(prdcts);
+
+            const order = new Order({
+                userId,
+                prdcts: parsedPrdcts.map(p => ({ productId: p, quantity: 1 })),
+                purchaseDate,
+                totalPrice
+            });
+
+            await order.save();
+
+            return res.status(200).json({ status: 'Success', message: 'Payment successfully completed and order saved' });
+        } else {
+            return res.status(400).json({ status: 'Failed', message: 'Payment not completed' });
+        }
+    } catch (error) {
+        console.error('Error confirming payment:', error);
+        return res.status(500).json({
+            status: 'Failure',
+            message: 'Something went wrong...!',
+            error: error.message
+        });
+    }
+});
+
+
+
+
+
+const singlePayment = asyncErrorHandler(async (req, res) => {
+    const { productId, userId } = req.body;
+
+    try {
+        const product = await products.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        const users = await user.findById(userId);
+        if (!users) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const customer = await stripe.customers.create({
+            name: users.username,
+            address: {
+                line1: 'Moyan 123',
+                city: 'Vengara',
+                state: 'kerala',
+                postal_code: '123456',
+                country: 'IN'
+            }
+        })
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [
+                {
+                    price_data: {
+                        currency: 'usd',
+                        product_data: {
+                            name: product.title,
+                            description: product.description,
+                            images: [product.image],
+                        },
+                        unit_amount: Math.round(product.price * 100),
+                    },
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment',
+            customer: customer.id,
+            success_url: `http://localhost:3000/user/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `http://localhost:3000/user/payment/cancel`,
+            metadata: {
+                userId: userId,
+                productId: productId,
+                totalPrice: product.price.toFixed(2),
+                quantity: 1
+            },
+        });
+
+        if (session) {
+            return res.status(200).json({
+                status: 'Success',
+                session: session.url,
+            });
+        } else {
+            return res.status(500).json({
+                status: 'Failed to create session',
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'Error',
+            message: 'Something went wrong during payment processing',
+        });
+    }
+});
+
+
+
+
+
+const productConfirmPayment = asyncErrorHandler(async (req, res) => {
+    const { sessionId } = req.body;
+
+    if (typeof sessionId !== 'string' || sessionId.trim() === '') {
+        return res.status(400).json({ status: 'Failed', message: 'Invalid session ID' });
+    }
+
+    try {
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        if (session.payment_status === 'paid') {
+            const { userId, productId, totalPrice, quantity } = session.metadata;
+
+            const parsedQuantity = parseInt(quantity, 10);
+            const parsedTotalPrice = parseFloat(totalPrice);
+
+            if (isNaN(parsedQuantity) || isNaN(parsedTotalPrice)) {
+                return res.status(400).json({
+                    status: 'Failed',
+                    message: 'Invalid quantity or total price'
+                });
+            }
+
+            const order = new ProductOrder({
+                userId,
+                productId,
+                quantity: parsedQuantity,
+                totalAmount: parsedTotalPrice,
+                paymentStatus: 'Completed',
+                paymentMethod: 'Stripe',
+                paymentDetails: {
+                    sessionId,
+                    ...session
+                },
+                orderStatus: 'Processing'
+            });
+
+            await order.save();
+
+            return res.status(200).json({ status: 'Success', message: 'Payment successfully completed and order saved' });
+        } else {
+            return res.status(400).json({ status: 'Failed', message: 'Payment not completed' });
+        }
+    } catch (error) {
+        console.error('Error confirming payment:', error);
+        return res.status(500).json({
+            status: 'Failure',
+            message: 'Something went wrong...',
+            error: error.message
+        });
+    }
+});
+
+
+
+
+
+
+
+
+
 
 module.exports = {
     prdcts,
@@ -144,6 +322,7 @@ module.exports = {
     getProductByCategory,
     getProductById,
     payment,
-    paymentSuccess,
-    paymentCancel
+    confirmPayment,
+    singlePayment,
+    productConfirmPayment
 }

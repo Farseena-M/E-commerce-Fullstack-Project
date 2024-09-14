@@ -29,7 +29,8 @@ accountCreatedDate: {
   isDeleted: {
     type: Boolean,
     default: false
-  }
+  },
+  
 })
 
 

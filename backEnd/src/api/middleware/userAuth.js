@@ -24,7 +24,7 @@ module.exports = function verifyToken(req, res, next) {
             console.error("JWT Error:", err);
             return res.status(401).json({ message: "Unauthorized" });
         }
-        req.email = decode.email;
+        req.username = decode.username;
         next();
     });
 };
