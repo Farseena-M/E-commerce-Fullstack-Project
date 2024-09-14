@@ -1,25 +1,41 @@
 const jwt = require('jsonwebtoken');
 
-const vrfyToken = async(req,res,next) =>{
-    const authHeader = req.headers['authorization']
-    if(!authHeader){
-        res.status(404).json({
-            status:'Failed',
-            message:'No token provided'
-        })
-    }
-    const token = authHeader;
+const vrfyToken = async (req, res, next) => {
+    try {
+        const authHeader = req.headers['authorization'];
 
-    if(!token){
-        res.status(404).json({message:'You are not loggedIn'})
-    }
+        if (!authHeader) {
+            return res.status(401).json({
+                status: 'Failed',
+                message: 'No token provided'
+            });
+        }
 
-    const decodeToken = await jwt.verify(token,process.env.SECRET_STR)
-    const isAdmin = decodeToken.isAdmin
-    if(!isAdmin){
-        res.status(404).json({message:'Unauthorized access'})
-    }
-    next()
+        const token = authHeader.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({
+                status: 'Failed',
+                message: 'Token missing or invalid'
+            });
+        }
 
-}
-module.exports = vrfyToken
+        const decodedToken = await jwt.verify(token, process.env.SECRET_STR);
+        const isAdmin = decodedToken.isAdmin;
+
+        if (!isAdmin) {
+            return res.status(403).json({
+                status: 'Failed',
+                message: 'Unauthorized access'
+            });
+        }
+
+        next();
+    } catch (error) {
+        return res.status(401).json({
+            status: 'Failed',
+            message: 'Invalid or expired token'
+        });
+    }
+};
+
+module.exports = vrfyToken;

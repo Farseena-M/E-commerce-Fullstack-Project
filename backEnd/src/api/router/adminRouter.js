@@ -21,7 +21,7 @@ adminRouter.post('/login',(adminController.adminLogin))
 .get('/categories',(adminController.getAllCategory))
 .put('/updatecategory/:id',(adminController.updateCatgory))
 .delete('/deletecategory/:id',(adminController.deleteCategory))
-.get('/purchasedproducts',(adminController.allPurchasedProducts))
+.get('/all-orders',(adminController.getAllOrders))
 
 
 

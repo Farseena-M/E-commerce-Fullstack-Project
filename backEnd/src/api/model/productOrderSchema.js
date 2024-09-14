@@ -38,6 +38,10 @@ const productOrderSchema = new mongoose.Schema({
         enum: ['Processing', 'Shipped', 'Delivered', 'Cancelled'],
         default: 'Processing'
     },
+    purchaseDate: {
+        type: Date,
+        default: Date.now
+    },
     createdAt: {
         type: Date,
         default: Date.now

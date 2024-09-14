@@ -228,6 +228,7 @@ const singlePayment = asyncErrorHandler(async (req, res) => {
                 userId: userId,
                 productId: productId,
                 totalPrice: product.price.toFixed(2),
+                purchaseDate: new Date().toISOString(),
                 quantity: 1
             },
         });
@@ -265,7 +266,7 @@ const productConfirmPayment = asyncErrorHandler(async (req, res) => {
     try {
         const session = await stripe.checkout.sessions.retrieve(sessionId);
         if (session.payment_status === 'paid') {
-            const { userId, productId, totalPrice, quantity } = session.metadata;
+            const { userId, productId, totalPrice,purchaseDate, quantity } = session.metadata;
 
             const parsedQuantity = parseInt(quantity, 10);
             const parsedTotalPrice = parseFloat(totalPrice);
@@ -280,6 +281,7 @@ const productConfirmPayment = asyncErrorHandler(async (req, res) => {
             const order = new ProductOrder({
                 userId,
                 productId,
+                purchaseDate,
                 quantity: parsedQuantity,
                 totalAmount: parsedTotalPrice,
                 paymentStatus: 'Completed',
