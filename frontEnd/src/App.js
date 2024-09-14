@@ -21,13 +21,15 @@ import SignUp from "./Pages/SignUp";
 import axios from 'axios'
 import Wishlist from "./Pages/wishList";
 import All from "./Pages/All";
+import PaymentSuccess from "./Pages/PaymentSuccess";
+import ProductPaymentSuccess from "./Pages/ProductPaymentSuccess";
 
 export const userContext = createContext()
 
 export const Axios = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:9000/",
   headers: {
-    Authorization: `Bearer ${localStorage.getItem('userToken')}` 
+    Authorization: `Bearer ${localStorage.getItem('userToken')}`
   }
 })
 
@@ -43,7 +45,7 @@ function App() {
   const [user, setUser] = useState([])
   const [login, setLogin] = useState(false)
   const [product, setProduct] = useState(PRODUCTS)
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState([{ items: [] }])
   const [search, setSearch] = useState('')
   const [buy, setBuy] = useState([])
   return (
@@ -67,6 +69,8 @@ function App() {
           <Route path="/all" element={<All />}></Route>
           <Route path="/view/:id" element={<ViewProduct />}></Route>
           <Route path="/wishlist" element={<Wishlist />}></Route>
+          <Route path='/users/payment/success' element={<PaymentSuccess />} />
+          <Route path='/user/payment/success' element={<ProductPaymentSuccess />} />
         </Routes>
       </userContext.Provider>
       <ToastContainer />

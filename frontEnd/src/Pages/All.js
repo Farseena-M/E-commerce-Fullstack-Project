@@ -50,7 +50,7 @@ const All = () => {
         toast.success("Product added to the wishlist!");
       }
     } catch (err) {
-      toast.error(err.message);
+      toast.error("Product already added to the wishlist!");
     }
   };
 

@@ -38,7 +38,7 @@ const Prdcts = () => {
         toast.success("Product added to the wishlist!");
       }
     } catch (err) {
-      toast.error(err.message);
+      toast.error("Product already added to the wishlist!");
     }
   };
 
@@ -56,7 +56,7 @@ const Prdcts = () => {
                 <Card.Img variant="top" src={item.image} style={{ height: '200px', objectFit: 'cover' }} />
                 <Card.Body>
                   <Card.Title style={{ fontFamily: 'serif' }}><b>{item.title}</b></Card.Title>
-                  <Card.Title style={{ fontFamily: 'serif' }}>${item.price}</Card.Title>
+                  <Card.Title style={{ fontFamily: 'serif' }}>₹{item.price}</Card.Title>
                   <Button
                     onClick={() => Nvgt(`/view/${item._id}`)}
                     style={{

@@ -12,7 +12,7 @@ import { useAuthContext } from '../Context/AuthContext';
 const ViewProduct = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const {authUser}= useAuthContext()
+  const { authUser } = useAuthContext()
 
 
   useEffect(() => {
@@ -49,17 +49,25 @@ const ViewProduct = () => {
     }
   };
 
-  const handlePayment = async() =>{
-    try{
-    const rspns = await Axios.post(`http://localhost:9000/api/users/payment/${authUser._id}`)
-    // console.log(rspns.data.session);
-    const Session = rspns.data.session;
-    console.log(Session);
-    window.location.href = Session     
-    }catch(err){
-      toast.error(err)  
+  const handlePayment = async () => {
+    try {
+      const response = await Axios.post('http://localhost:9000/api/users/payment', {
+        productId: product._id,
+        userId: authUser._id,
+      });
+
+      if (response.data.status === 'Success') {
+        window.location.href = response.data.session;
+      } else {
+        toast.error('Payment session creation failed');
+      }
+    } catch (error) {
+      toast.error('An error occurred while processing the payment');
+      console.error('Payment Error:', error);
     }
-  }
+  };
+
+
 
   return (
     <div className="bg-light min-vh-100">

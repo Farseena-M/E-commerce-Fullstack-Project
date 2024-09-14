@@ -9,7 +9,6 @@ import { useAuthContext } from "../Context/AuthContext";
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
   const { authUser } = useAuthContext();
-  const navigate = useNavigate();
 
   const fetchWishlist = async () => {
     try {
@@ -35,17 +34,23 @@ const Wishlist = () => {
     }
   };
 
-  const handlePayment = async() =>{
-    try{
-    const rspns = await Axios.post(`http://localhost:9000/api/users/payment/${authUser._id}`)
-    // console.log(rspns.data.session);
-    const Session = rspns.data.session;
-    console.log(Session);
-    window.location.href = Session     
-    }catch(err){
-      toast.error(err)  
+  const handlePayment = async (id) => {
+    try {
+      const response = await Axios.post('http://localhost:9000/api/users/payment', {
+        productId: id,
+        userId: authUser._id,
+      });
+
+      if (response.data.status === 'Success') {
+        window.location.href = response.data.session;
+      } else {
+        toast.error('Payment session creation failed');
+      }
+    } catch (error) {
+      toast.error('An error occurred while processing the payment');
+      console.error('Payment Error:', error);
     }
-  }
+  };
 
   return (
     <div style={{ background: "#f9f9f9", minHeight: '100vh' }}>
@@ -63,11 +68,10 @@ const Wishlist = () => {
                       {item.title}
                     </CardTitle>
                     <p className="text-muted">Price: ₹{item.price}</p>
-                    <p className="text-muted">Qty: {item.quantity}</p>
                     <Button variant="outline-danger" onClick={() => removeWishlistItem(item._id)}>
                       Remove
                     </Button>
-                    <Button variant="success" className="ms-2" onClick={handlePayment}>
+                    <Button variant="success" className="ms-2" onClick={() => handlePayment(item._id)}>
                       Buy Now
                     </Button>
                   </CardBody>
