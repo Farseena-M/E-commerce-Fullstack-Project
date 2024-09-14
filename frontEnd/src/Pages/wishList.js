@@ -55,8 +55,8 @@ const Wishlist = () => {
   return (
     <div style={{ background: "#f9f9f9", minHeight: '100vh' }}>
       <Navigation />
-      <Container>
-        <h2 className="text-center my-4">My Wishlist</h2>
+      <Container >
+        <h2 className="text-center text-dark mb-4" style={{ fontFamily: 'Georgia, serif', fontSize: '2rem' }}>My Wishlist</h2>
         <Row className="justify-content-center">
           {wishlist.length > 0 ? (
             wishlist.map((item) => (

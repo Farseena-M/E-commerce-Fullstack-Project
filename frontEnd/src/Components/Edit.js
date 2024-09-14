@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from './SideBar'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AXIOS } from '../App'
@@ -34,8 +34,9 @@ const Edit = () => {
   const saveData = async () => {
     try {
       const rspns = await AXIOS.put(`http://localhost:9000/api/admin/products/${id}`, products)
-      console.log(rspns);
+      // console.log(rspns);
       nvgt('/adminprdcts')
+      toast.success(`Product Edited Successfully`)
     } catch (err) {
       toast.error(err)
     }
@@ -49,27 +50,95 @@ const Edit = () => {
     }))
   }
   return (
-    <div style={{ display: 'flex' }}>
+    <div className='d-flex'>
       <Sidebar />
-      <div style={{ flex: '1', textAlign: 'center', backgroundColor: 'grey', height: '990px', width: '100%' }}>
-        <h1 style={{ fontFamily: 'sans-serif', padding: '10px', position: 'relative', top: '30px', color: '#333' }}>Edit Product</h1><br /><hr />
-        <Form>
-          <label style={{ fontSize: '20px', fontFamily: 'italic' }}> Product Name </label><br />
-          <input className='shadow' style={{ height: '45px', width: '500px', border: '1px solid grey', borderRadius: '8px', textAlign: 'center' }} type='text' name='title' value={products.title} onChange={handleChange} /><br /><br />
-          <label style={{ fontSize: '20px', fontFamily: 'italic' }}> Product Description </label><br />
-          <input className='shadow' style={{ height: '45px', width: '500px', border: '1px solid grey', borderRadius: '8px', textAlign: 'center' }} type='text' name='description' value={products.description} onChange={handleChange} /><br /><br />
-          <label style={{ fontSize: '20px', fontFamily: 'italic' }} > Product Price </label><br />
-          <input className='shadow' style={{ height: '45px', width: '500px', border: '1px solid grey', borderRadius: '8px', textAlign: 'center' }} type='number' name='price' value={products.price} onChange={handleChange} /><br /><br />
+      <div style={{ flex: '1', textAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.1)', height: '100vh', padding: '20px' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '30px', backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', marginTop: '30px' }}>
+          <h1 style={{ fontFamily: 'Georgia, serif', color: '#4A4A4A', fontStyle: 'oblique', fontSize: '2.5rem', fontWeight: 'lighter' }}>
+            Edit Product
+          </h1>
+          <Form>
+            <Form.Group controlId="formTitle">
+              <Form.Label style={{ fontSize: '16px', fontFamily: 'italic' }}>Product Name</Form.Label>
+              <Form.Control
+                type="text"
+                name='title'
+                value={products.title}
+                onChange={handleChange}
+                required
+                style={{ marginBottom: '15px', height: '35px' }}
+              />
+            </Form.Group>
 
-          <label style={{ fontSize: '20px', fontFamily: 'italic' }} > Product Image </label><br />
-          <input className='shadow' style={{ height: '45px', width: '500px', border: '1px solid grey', borderRadius: '8px', textAlign: 'center' }} type='text' name='image' value={products.image} onChange={handleChange} /><br /><br />
+            <Form.Group controlId="formDescription">
+              <Form.Label style={{ fontSize: '16px', fontFamily: 'italic' }}>Product Description</Form.Label>
+              <Form.Control
+                type="text"
+                name='description'
+                value={products.description}
+                onChange={handleChange}
+                required
+                style={{ marginBottom: '15px', height: '35px' }}
+              />
+            </Form.Group>
 
-          <select className='shadow' style={{ height: '40px', width: '300px', border: '1px solid grey', borderRadius: '8px', textAlign: 'center', fontSize: '20px' }} name='category' value={products.category} onChange={handleChange}>
-            <option>Product Type</option>
-            <option>Cloth</option>
-            <option>Product</option></select><br /><br />
-          <Button onClick={saveData} style={{ backgroundColor: 'black', border: '1px solid grey', height: '40px', width: '100px' }} >Save</Button>
-        </Form>
+            <Form.Group controlId="formPrice">
+              <Form.Label style={{ fontSize: '16px', fontFamily: 'italic' }}>Product Price</Form.Label>
+              <Form.Control
+                type="number"
+                name='price'
+                value={products.price}
+                onChange={handleChange}
+                required
+                style={{ marginBottom: '15px', height: '35px' }}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formImage">
+              <Form.Label style={{ fontSize: '16px', fontFamily: 'italic' }}>Product Image URL</Form.Label>
+              <Form.Control
+                type="text"
+                name='image'
+                value={products.image}
+                onChange={handleChange}
+                required
+                style={{ marginBottom: '15px' }}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formQuantity">
+              <Form.Label style={{ fontSize: '16px', fontFamily: 'italic' }}>Quantity</Form.Label>
+              <Form.Control
+                type="number"
+                name='quantity'
+                value={products.quantity}
+                onChange={handleChange}
+                required
+                style={{ marginBottom: '15px', height: '35px' }}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formCategory">
+              <Form.Label style={{ fontSize: '16px', fontFamily: 'italic' }}>Category</Form.Label>
+              <Form.Control
+                as="select"
+                name='category'
+                value={products.category}
+                onChange={handleChange}
+                required
+                style={{ marginBottom: '15px', height: '35px' }}
+              >
+                <option value="">Select Category</option>
+                <option value="cloth">Cloth</option>
+                <option value="product">Product</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Button onClick={saveData} className="custom-button btn btn-dark w-100">
+              Save
+            </Button>
+          </Form>
+        </div>
       </div>
     </div>
   )

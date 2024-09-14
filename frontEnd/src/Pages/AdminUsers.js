@@ -28,7 +28,7 @@ const AdminUsers = () => {
        <Table  striped bordered hover size="sm" style={{margin:'0 auto'}}>
       <thead >
         <tr>
-          <th style={{width:'850px'}}>Username</th>
+          <th style={{width:'850px'}}>UserName</th>
           <th>E-mail</th>
         </tr>
       </thead>

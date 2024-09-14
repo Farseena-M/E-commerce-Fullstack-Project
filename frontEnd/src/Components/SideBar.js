@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../Components/Assets/Babyshh.png'
+import logo from '../Components/Assets/Babyshh.png';
 import {
   CDBSidebar,
   CDBSidebarContent,
@@ -8,17 +8,24 @@ import {
   CDBSidebarMenu,
   CDBSidebarMenuItem,
 } from 'cdbreact';
-import { NavLink, useNavigate} from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
 
-
 const Sidebar = () => {
-  const Nvgtn=useNavigate()
+  const Nvgtn = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken')
+    Nvgtn('/adminlogin'); 
+  };
+
   return (
-    <div style={{ display: 'flex', height: '371vh', overflow: 'scroll initial',position:'fixed'}}>
+    <div style={{ display: 'flex', height: '371vh', overflow: 'scroll initial', position: 'fixed' }}>
       <CDBSidebar textColor="#fff" backgroundColor="#333">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-        <Navbar.Brand  style={{cursor:'pointer'}} onClick={()=>Nvgtn('/')}><img style={{height:'50px'}} src={logo} alt='logo'/></Navbar.Brand>
+          <Navbar.Brand style={{ cursor: 'pointer' }} onClick={() => Nvgtn('/')}>
+            <img style={{ height: '50px' }} src={logo} alt='logo' />
+          </Navbar.Brand>
         </CDBSidebarHeader>
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
@@ -31,28 +38,20 @@ const Sidebar = () => {
             <NavLink exact to="/adminprdcts" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="table">Products</CDBSidebarMenuItem>
             </NavLink>
-            {/* <NavLink exact to="/addcategory" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="bookmark">Add Category</CDBSidebarMenuItem>
-            </NavLink> */}
             <NavLink exact to="/add" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="plus">Add Products</CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/buy" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="table">Buy Products</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/"  activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="home">Home</CDBSidebarMenuItem>
-            </NavLink>
+            <CDBSidebarMenuItem icon="sign-out-alt" onClick={handleLogout}>
+              Logout
+            </CDBSidebarMenuItem>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
         <CDBSidebarFooter style={{ textAlign: 'center' }}>
-          <div
-            style={{
-              padding: '20px 5px',
-            }}
-          >
-           
+          <div style={{ padding: '20px 5px' }}>
           </div>
         </CDBSidebarFooter>
       </CDBSidebar>

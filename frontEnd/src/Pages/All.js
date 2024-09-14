@@ -20,7 +20,7 @@ const All = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get('http://localhost:9000/api/users/products');
-        console.log(res.data.data.products);
+        // console.log(res.data.data.products);
         if (res.status === 200) {
           setProduct(res.data.data.products);
         }
@@ -44,7 +44,7 @@ const All = () => {
   const addToWishList = async (id) => {
     try {
       const rspns = await Axios.post(`http://localhost:9000/api/users/wishlist/${authUser._id}`, { product: id });
-      console.log(rspns);
+      // console.log(rspns);
       if (rspns.status === 200) {
         await Axios.get(`http://localhost:9000/api/users/wishlist/${authUser._id}`);
         toast.success("Product added to the wishlist!");
@@ -96,7 +96,7 @@ const All = () => {
                   <Card.Title style={{ fontFamily: 'serif' }}>₹{item.price}</Card.Title>
                   <Button
                     style={{
-                      backgroundColor: 'black',
+                      backgroundColor: 'gray',
                       border: 'none',
                       width: '100%',
                       padding: '10px',

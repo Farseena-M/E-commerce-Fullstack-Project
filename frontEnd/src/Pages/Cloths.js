@@ -18,7 +18,7 @@ const Cloths = () => {
     const fetchClothes = async () => {
       try {
         const response = await Axios.get('http://localhost:9000/api/users/category/cloth');
-        console.log(response.data.data.products);
+        // console.log(response.data.data.products);
         if (response.status === 200) {
           setCloth(response.data.data.products);
         }
@@ -32,7 +32,7 @@ const Cloths = () => {
   const addToWishList = async (id) => {
     try {
       const rspns = await Axios.post(`http://localhost:9000/api/users/wishlist/${authUser._id}`, { product: id });
-      console.log(rspns);
+      // console.log(rspns);
       if (rspns.status === 200) {
         await Axios.get(`http://localhost:9000/api/users/wishlist/${authUser._id}`);
         toast.success("Product added to the wishlist!");
@@ -59,7 +59,7 @@ const Cloths = () => {
                   <Card.Title style={{ fontFamily: 'serif' }}>₹{item.price}</Card.Title>
                   <Button
                     style={{
-                      backgroundColor: 'black',
+                      backgroundColor: 'gray',
                       border: 'none',
                       width: '100%',
                       padding: '10px',
