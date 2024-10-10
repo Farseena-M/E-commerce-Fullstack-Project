@@ -12,7 +12,7 @@ import { useAuthContext } from '../Context/AuthContext';
 const Prdcts = () => {
   const Nvgt = useNavigate();
   const [prdct, setPrdct] = useState([]);
-  const {authUser}= useAuthContext()
+  const { authUser } = useAuthContext()
 
   useEffect(() => {
     const fetchProducts = async () => {
